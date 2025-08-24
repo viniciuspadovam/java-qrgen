@@ -1,0 +1,8 @@
+<main>
+  <input type="text" #qrCodeText id="qrCodeText" placeholder="Enter text to generate QR code">
+  <button type="button" (click)="generateQRCode(qrCodeText.value)">Generate QR Code</button>
+
+  <div class="presentation">
+    <img/>
+  </div>
+</main>
