@@ -1,8 +1,35 @@
 <main>
-  <input type="text" #qrCodeText id="qrCodeText" placeholder="Enter text to generate QR code">
-  <button type="button" (click)="generateQRCode(qrCodeText.value)">Generate QR Code</button>
+  <form #myForm="ngForm" (ngSubmit)="generateQRCode(myForm.value)">
+    <div class="input-wrapper">
+      <label for="dataToConvert" title="Campo Obrigatório">
+        Link<span class="required">*</span>
+      </label>
+      <div style="width: 100%;">
+        <input type="text" name="dataToConvert" id="dataToConvert" ngModel placeholder="Link que quer transformar em QR Code" required>
+  
+        @if(myForm.controls['dataToConvert'] && (!myForm.controls['dataToConvert'].valid && myForm.controls['dataToConvert'].touched)) {
+          <span class="invalid-feedback">Campo obrigatório!</span>
+        }
+      </div>
+    </div>
+    <div class="multiple-fields">
+      <div class="input-wrapper">
+        <label for="width">Largura</label>
+        <input type="text" name="width" id="width" [(ngModel)]="width" max="500" placeholder="Padrão 200px">
+      </div>
+      <div class="input-wrapper">
+        <label for="height">Altura</label>
+        <input type="text" name="height" id="height" [(ngModel)]="height" max="500" placeholder="Padrão 200px">
+      </div>
+    </div>
+    <button type="submit" class="btn-primary" [disabled]="!myForm.valid">Generate</button>
+  </form>
 
   <div class="presentation">
-    <img/>
+    <img alt="QR Code" [style.opacity]="presentationVisible ? 1 : 0"/>
+
+    @if(presentationVisible) {
+      <button class="btn-primary" (click)="saveQRCode()" [disabled]="!presentationVisible">Salvar QR Code</button>
+    }
   </div>
 </main>
